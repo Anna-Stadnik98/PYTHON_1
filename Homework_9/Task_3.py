@@ -3,26 +3,22 @@
 Создайте собственный класс-исключение, который должен проверять содержимое списка на наличие только чисел. Проверить работу исключения на реальном примере. Необходимо запрашивать у пользователя данные и заполнять список только числами.
 Класс-исключение должен контролировать типы данных элементов списка.
 """
-class Error:
-    def __init__(self, *args):
-        self.my_list = []
 
-    def my_input(self):        
-        while True:
-            try:
-                val = int(input('Введите значения и нажимайте Enter - '))
-                self.my_list.append(val)
-                print(f'Текущий список - {self.my_list} \n ')
-            except:
-                print(f"Недопустимое значение - строка и булево")
-                y_or_n = input(f'Попробовать еще раз? Y/N ')
+class NotNumber(Exception):
+    def __init__(self, lst):
+        self.lst = lst
 
-                if y_or_n == 'Y' or y_or_n == 'y':
-                    print(try_except.my_input())
-                elif y_or_n == 'N' or y_or_n == 'n':
-                    return f'Вы вышли'
-                else:
-                    return f'Вы вышли'
-                
-try_except = Error(1)
-print(try_except.my_input())
+validations = ('1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.', ',')
+
+user_values = input('Введите несколько чисел через пробел: ').split()
+numbers = []
+for value in user_values:
+    try:
+        for i in range(len(value)):
+            if not (value[i] in validations):
+                raise NotNumber(f'{value} - не число')
+        numbers.append(float(value))
+    except NotNumber as err:
+        print(err)
+
+print(f'Числовой массив: {numbers}')

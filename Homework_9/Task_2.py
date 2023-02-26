@@ -5,20 +5,17 @@
 в качестве делителя программа должна корректно обработать эту ситуацию и не завершиться с ошибкой.
 """
 
-class DivisionByNull(Exception):
+class ZeroDivideException(Exception):
+    def __init__(self, msg):
+        self.msg = msg
 
-    def __init__(self, division):
-        self.division = division
 
-
-num1 = int(input('Введите первое число: '))
-num2 = int(input('Введите второе число: '))
+number1 = int(input('Введите число 1: '))
+number2 = int(input('Введите число 2: '))
 
 try:
-    if num2 == 0:
-        raise DivisionByNull('Деление на ноль недопустимо!')
-    res = num1 / num2
-except DivisionByNull as err:
+    if number2 == 0:
+        raise ZeroDivideException('Делить на ноль нельзя')
+    print(f'{number1} : {number2} = {number1 / number2}')
+except ZeroDivideException as err:
     print(err)
-else:
-    print(f'Результат: {res}')
